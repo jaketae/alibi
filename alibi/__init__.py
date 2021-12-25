@@ -1,2 +1,2 @@
 from alibi.config import ALiBiConfig
-from alibi.models import ALiBiTransformer
+from alibi.model import ALiBiTransformer
