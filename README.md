@@ -12,7 +12,7 @@ Clone this repository.
 git clone https://github.com/jaketae/alibi.git
 ```
 
-Navigate to the cloned directory. You can use the bare-bone TUPE Encoder model via
+Navigate to the cloned directory. You can use the bare-bone ALiBi decoder via
 
 ```python
 >>> import torch; from alibi import ALiBiConfig, ALiBiTransformer
@@ -36,6 +36,8 @@ ALiBiConfig(
     expansion_factor=1
 )
 ```
+
+To use an encoder instead of a decoder, simply toggle `causal=False`. 
 
 ## Abstract
 
