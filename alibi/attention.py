@@ -31,7 +31,7 @@ class ALiBiMultiHeadAttention(nn.Module):
     def forward(self, x: torch.tensor) -> torch.tensor:
         batch_size, seq_len, _ = x.shape
 
-        key, query, value = self.kqv(x).chunk(3, dim=-1)
+        key, query, value = self.kqv(self.norm(x)).chunk(3, dim=-1)
         key = key.view(batch_size, seq_len, self.num_heads, -1).permute(0, 2, 3, 1)
         # key.shape == (batch_size, num_heads, d_head, seq_len)
         query = query.view(batch_size, seq_len, self.num_heads, -1).transpose(1, 2)
