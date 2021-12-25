@@ -2,6 +2,8 @@
 
 PyTorch implementation of [Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation](https://arxiv.org/abs/2108.12409).
 
+![alt-text](https://production-media.paperswithcode.com/methods/Screen_Shot_2021-08-31_at_9.34.28_AM.png)
+
 ## Quickstart
 
 Clone this repository.
