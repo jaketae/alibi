@@ -18,9 +18,9 @@ Navigate to the cloned directory. You can use the bare-bone ALiBi decoder via
 >>> import torch; from alibi import ALiBiConfig, ALiBiTransformer
 >>> config  = ALiBiConfig()
 >>> model = ALiBiTransformer(config)
->>> x = torch.randn(8, 100, 128)
+>>> x = torch.randn(8, 100, 256)
 >>> model(x).shape
-torch.Size([8, 100, 128])
+torch.Size([8, 100, 256])
 ```
 
 By default, the model comes with the following parameters:
