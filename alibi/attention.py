@@ -19,7 +19,6 @@ class ALiBiMultiHeadAttention(nn.Module):
         self.causal = config.causal
         self.num_heads = config.num_heads
         self.scale = math.sqrt(config.d_model)
-        self.norm = nn.LayerNorm(config.d_model)
         self.dropout = nn.Dropout(config.dropout)
         self.m = nn.Parameter(torch.randn(config.num_heads, 1, 1))
         self.kqv = nn.Linear(config.d_model, 3 * config.d_model, bias=False)
@@ -31,7 +30,7 @@ class ALiBiMultiHeadAttention(nn.Module):
     def forward(self, x: torch.tensor) -> torch.tensor:
         batch_size, seq_len, _ = x.shape
 
-        key, query, value = self.kqv(self.norm(x)).chunk(3, dim=-1)
+        key, query, value = self.kqv(x).chunk(3, dim=-1)
         key = key.view(batch_size, seq_len, self.num_heads, -1).permute(0, 2, 3, 1)
         # key.shape == (batch_size, num_heads, d_head, seq_len)
         query = query.view(batch_size, seq_len, self.num_heads, -1).transpose(1, 2)
