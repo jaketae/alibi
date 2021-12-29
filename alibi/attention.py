@@ -13,6 +13,15 @@ def get_relative_positions(seq_len: int) -> torch.tensor:
     return x - y
 
 
+def get_alibi_slope(num_heads):
+    x = (2 ** 8) ** (1 / num_heads)
+    return (
+        torch.tensor([1 / x ** (i + 1) for i in range(num_heads)])
+        .unsqueeze(-1)
+        .unsqueeze(-1)
+    )
+
+
 class ALiBiMultiHeadAttention(nn.Module):
     def __init__(self, config: ALiBiConfig) -> None:
         super().__init__()
@@ -20,7 +29,7 @@ class ALiBiMultiHeadAttention(nn.Module):
         self.num_heads = config.num_heads
         self.scale = math.sqrt(config.d_model)
         self.dropout = nn.Dropout(config.dropout)
-        self.m = nn.Parameter(torch.randn(config.num_heads, 1, 1))
+        self.register_buffer("m", get_alibi_slope(self.num_heads))
         self.kqv = nn.Linear(config.d_model, 3 * config.d_model, bias=False)
         if config.causal:
             self.register_buffer(
